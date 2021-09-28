@@ -9,4 +9,5 @@ interface FDJRepository {
 
     suspend fun getLeagues(): List<LeagueDto>
 
+    suspend fun getTeamByName(team: String): TeamDto
 }

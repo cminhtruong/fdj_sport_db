@@ -1,5 +1,7 @@
 package app.el_even.fdj.data.remote.dto
 
+import app.el_even.fdj.domain.model.Team
+
 data class TeamDto(
     val idAPIfootball: String,
     val idLeague: String,
@@ -64,4 +66,17 @@ data class TeamDto(
     val strTwitter: String,
     val strWebsite: String,
     val strYoutube: String
+)
+
+fun TeamDto.toTeam(): Team = Team(
+    id = idAPIfootball,
+    name = strTeam,
+    fullName = strAlternate,
+    league = strLeague,
+    stadium = strStadium,
+    nickname = strKeywords,
+    description = strDescriptionEN,
+    banner = strTeamBanner,
+    location = strCountry,
+    badge = strTeamBadge
 )

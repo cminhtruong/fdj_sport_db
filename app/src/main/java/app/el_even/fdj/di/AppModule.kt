@@ -2,6 +2,8 @@ package app.el_even.fdj.di
 
 import app.el_even.fdj.common.Constant
 import app.el_even.fdj.data.remote.api.SportDBApi
+import app.el_even.fdj.data.repository.FDJRepositoryImpl
+import app.el_even.fdj.domain.repository.FDJRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -19,16 +21,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSportDBApi(): SportDBApi {
-        return Retrofit.Builder()
-            .baseUrl(Constant.BASE_URL)
-            .addConverterFactory(
-                MoshiConverterFactory.create(
-                    Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-                )
+    fun provideSportDBApi(): SportDBApi = Retrofit.Builder()
+        .baseUrl(Constant.BASE_URL)
+        .addConverterFactory(
+            MoshiConverterFactory.create(
+                Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
             )
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
-            .create(SportDBApi::class.java)
-    }
+        )
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(SportDBApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideFDJRepository(api: SportDBApi): FDJRepository = FDJRepositoryImpl(api)
 }
