@@ -11,6 +11,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import app.el_even.fdj.presentation.league_list.LeagueListScreen
+import app.el_even.fdj.presentation.team_detail.TeamScreen
 import app.el_even.fdj.presentation.team_list.TeamListScreen
 import app.el_even.fdj.presentation.ui.theme.FDJTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,14 +31,19 @@ class MainActivity : ComponentActivity() {
                         startDestination = Screen.MainScreen.route
                     ) {
                         composable(
-                            route = Screen.TeamListScreen.route + "/league"
+                            route = Screen.TeamListScreen.route + "/{league}"
                         ) {
                             TeamListScreen(navController = navController)
                         }
                         composable(
                             route = Screen.TeamScreen.route + "/{name}"
                         ) {
-
+                            TeamScreen()
+                        }
+                        composable(
+                            route = Screen.MainScreen.route
+                        ) {
+                            LeagueListScreen(navController = navController)
                         }
                     }
                 }
