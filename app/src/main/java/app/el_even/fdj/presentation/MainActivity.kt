@@ -8,6 +8,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import app.el_even.fdj.presentation.team_list.TeamListScreen
 import app.el_even.fdj.presentation.ui.theme.FDJTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,22 +23,24 @@ class MainActivity : ComponentActivity() {
             FDJTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.MainScreen.route
+                    ) {
+                        composable(
+                            route = Screen.TeamListScreen.route + "/league"
+                        ) {
+                            TeamListScreen(navController = navController)
+                        }
+                        composable(
+                            route = Screen.TeamScreen.route + "/{name}"
+                        ) {
+
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    FDJTheme {
-        Greeting("Android")
     }
 }

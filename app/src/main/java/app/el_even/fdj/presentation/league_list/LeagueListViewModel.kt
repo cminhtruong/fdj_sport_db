@@ -19,6 +19,10 @@ class LeagueListViewModel @Inject constructor(
     private val _state = mutableStateOf(LeagueListState())
     val state: State<LeagueListState> = _state
 
+    init {
+        getLeagues()
+    }
+
     private fun getLeagues() {
         getAllLeaguesUC().onEach { result ->
             when (result) {
